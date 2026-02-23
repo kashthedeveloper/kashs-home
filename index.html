@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <link rel="icon" href="imgs/house-chimney.svg" type="image/svg+xml">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            font-family: Arial, sans-serif;
+            transition: background-image 0.3s ease;
+        }
+        form {
+            justify-content: space-between;
+            display: flex;
+            align-items: center;
+            width: 100%;
+        }
+
+        .search-container {
+            text-align: center;
+            background-color: rgba(255, 255, 255, 0);
+            padding: 30px;
+            border-radius: 10px;
+            width: 100%;
+            max-width: 800px;
+        }
+
+        .logo {
+            width: 400px;
+            max-width: 85vw;
+            padding: 30px;
+        }
+
+        .search-box {
+            backdrop-filter: blur(8px);
+            background-color: rgba(255, 255, 255, 0.1);
+            width: 500px;
+            max-width: 90vw;
+            padding: 15px 25px;
+            border-radius: 50vh;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+            margin: 0 auto;
+        }
+        
+        .input-box {
+            background-color: rgba(255, 255, 255, 0);
+            color: rgb(255, 255, 255);
+            border: none;
+            outline: none;
+            font-size: 18px;
+            width: 85%;
+            padding: 5px 10px;
+        }
+
+        .search-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+
+        .search-icon {
+            height: 20px;
+            opacity: 0.7;
+            transition: opacity 0.2s;
+        }
+
+        .search-btn:hover .search-icon {
+            opacity: 1;
+        }
+
+        .favorites-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 20px;
+            margin-top: 30px;
+            max-width: 90vw;
+            width: 100%;
+        }
+
+        .favorite-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-decoration: none;
+            color: white;
+            backdrop-filter: blur(8px);
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+            position: relative;
+        }
+
+        .favorite-item:hover {
+            transform: scale(1.05);
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .favorite-icon {
+            width: 48px;
+            height: 48px;
+            margin-bottom: 8px;
+            object-fit: contain;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 5px;
+        }
+
+        .favorite-name {
+            font-size: 14px;
+            text-align: center;
+            word-break: break-word;
+            width: 100%;
+        }
+
+        .remove-favorite {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background-color: rgba(255, 0, 0, 0.8);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            font-size: 12px;
+            cursor: pointer;
+            display: none;
+            z-index: 2;
+        }
+
+        .edit-favorite {
+            position: absolute;
+            top: -8px;
+            left: -8px;
+            background-color: rgba(0, 123, 255, 0.8);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            font-size: 12px;
+            cursor: pointer;
+            display: none;
+            z-index: 2;
+        }
+
+        .favorite-item:hover .remove-favorite,
+        .favorite-item:hover .edit-favorite {
+            display: block;
+        }
+
+        .add-favorite-btn {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            backdrop-filter: blur(8px);
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+            transition: all 0.2s;
+            color: white;
+            text-decoration: none;
+        }
+
+        .add-favorite-btn:hover {
+            transform: scale(1.05);
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .add-icon {
+            width: 40px;
+            height: 40px;
+            margin-bottom: 8px;
+            opacity: 0.7;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background-color: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+            padding: 30px;
+            border-radius: 10px;
+            width: 400px;
+            max-width: 90vw;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+        }
+
+        .edit-modal-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .modal-title {
+            color: white;
+            margin-top: 0;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            width: 100%;
+        }
+
+        .form-group label {
+            display: block;
+            color: white;
+            margin-bottom: 8px;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #444;
+            background-color: rgba(255, 255, 255, 0.1);
+            color: white;
+        }
+
+        .modal-buttons {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            width: 100%;
+        }
+
+        .modal-btn {
+            padding: 8px 16px;
+            border-radius: 5px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .modal-btn.cancel {
+            background-color: #555;
+            color: white;
+        }
+
+        .modal-btn.save {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        .modal-btn:hover {
+            opacity: 0.9;
+        }
+
+        .current-icon {
+            width: 64px;
+            height: 64px;
+            margin-bottom: 15px;
+            object-fit: contain;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 10px;
+        }
+
+        .icon-preview {
+            width: 64px;
+            height: 64px;
+            margin: 10px 0;
+            object-fit: contain;
+            display: none;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 10px;
+        }
+
+        .icon-upload-input {
+            display: none;
+        }
+
+        .change-wallpaper {
+            padding: 10px;
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: auto;
+            height: auto;
+            border-radius: 50vh;
+            background-color: rgba(255, 255, 255, 0.1);
+            color: white;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+            z-index: 1;
+        }
+
+        .change-wallpaper:hover {
+            padding: 10px 20px;
+            background-color: rgba(255, 255, 255, 0.2);
+            transform: scale(1.1);
+        }
+
+        .txt {
+            display: none;
+        }
+
+        .change-wallpaper:hover > .txt {
+            display: flex;
+        }
+
+        .add_img {
+            width: 24px;
+            padding: 10px;
+        }
+
+        @media (max-width: 768px) {
+            .favorites-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .favorites-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .search-box {
+                padding: 12px 20px;
+            }
+            
+            .input-box {
+                font-size: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="search-container">
+        <img src="imgs/logo.svg" alt="Logo" class="logo">
+        <div class="search-box">        
+            <form action="https://duckduckgo.com/" method="GET" target="_blank">
+                <input type="text" name="q" class="input-box" placeholder="Pesquise..." autofocus>
+                <button type="submit" class="search-btn">
+                    <img src="imgs/search.svg" class="search-icon">
+                </button>
+            </form>
+        </div>
+
+        <div class="favorites-grid" id="favoritesGrid">
+            <!-- Favoritos serão carregados aqui via JavaScript -->
+        </div>
+    </div>
+
+    <!-- Modal para adicionar novo favorito -->
+    <div class="modal" id="addFavoriteModal">
+        <div class="modal-content">
+            <h3 class="modal-title">Adicionar Favorito</h3>
+            <div class="form-group">
+                <label for="favoriteName">Nome:</label>
+                <input type="text" id="favoriteName" placeholder="Ex: YouTube">
+            </div>
+            <div class="form-group">
+                <label for="favoriteUrl">URL:</label>
+                <input type="text" id="favoriteUrl" placeholder="Ex: https://youtube.com">
+            </div>
+            <div class="modal-buttons">
+                <button class="modal-btn cancel" id="cancelAddFavorite">Cancelar</button>
+                <button class="modal-btn save" id="saveFavorite">Salvar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal para editar favorito -->
+    <div class="modal" id="editFavoriteModal">
+        <div class="modal-content">
+            <div class="edit-modal-content">
+                <h3 class="modal-title">Editar Favorito</h3>
+                
+                <img id="currentFavoriteIcon" class="current-icon" src="">
+                
+                <div class="form-group">
+                    <label for="editFavoriteName">Nome:</label>
+                    <input type="text" id="editFavoriteName">
+                </div>
+                
+                <div class="form-group">
+                    <label for="editFavoriteUrl">URL:</label>
+                    <input type="text" id="editFavoriteUrl">
+                </div>
+                
+                <button class="modal-btn" id="uploadIconBtn">Alterar Ícone</button>
+                <input type="file" id="iconUploadInput" class="icon-upload-input" accept="image/*">
+                
+                <img id="iconPreview" class="icon-preview" src="">
+                
+                <div class="modal-buttons">
+                    <button class="modal-btn cancel" id="cancelEditFavorite">Cancelar</button>
+                    <button class="modal-btn save" id="saveEditedFavorite">Salvar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <button class="change-wallpaper" title="Trocar wallpaper">
+        <p class="txt">Adicionar Wallpaper</p>
+        <img class="add_img" src="https://cdn-icons-png.flaticon.com/512/2989/2989988.png" alt="">
+        <input type="file" id="wallpaperInput" accept="image/*" style="display: none;">
+    </button>
+
+    <script>
+        // Carrega o wallpaper salvo
+        document.addEventListener('DOMContentLoaded', function() {
+            const savedWallpaper = localStorage.getItem('customWallpaper');
+            if (savedWallpaper) {
+                document.body.style.backgroundImage = `url(${savedWallpaper})`;
+            }
+            
+            // Carrega os favoritos salvos
+            loadFavorites();
+        });
+
+        // Configura o botão de trocar wallpaper
+        document.querySelector('.change-wallpaper').addEventListener('click', function() {
+            document.getElementById('wallpaperInput').click();
+        });
+
+        // Quando seleciona uma imagem para wallpaper
+        document.getElementById('wallpaperInput').addEventListener('change', function(e) {
+            if (e.target.files && e.target.files[0]) {
+                const reader = new FileReader();
+                
+                reader.onload = function(event) {
+                    const imageUrl = event.target.result;
+                    document.body.style.backgroundImage = `url(${imageUrl})`;
+                    localStorage.setItem('customWallpaper', imageUrl);
+                };
+                
+                reader.readAsDataURL(e.target.files[0]);
+            }
+        });
+
+        // Funções para gerenciar favoritos
+        let favorites = JSON.parse(localStorage.getItem('favorites')) || [
+            { name: 'YouTube', url: 'https://youtube.com' },
+            { name: 'GIMP', url: 'https://www.gimp.org/' },
+            { name: 'Inkscape', url: 'https://inkscape.org/' },
+            { name: 'Pexels', url: 'https://www.pexels.com/' },
+            { name: 'Flaticon', url: 'https://www.flaticon.com/' }
+        ];
+
+        function saveFavorites() {
+            localStorage.setItem('favorites', JSON.stringify(favorites));
+        }
+
+        function loadFavorites() {
+            const favoritesGrid = document.getElementById('favoritesGrid');
+            favoritesGrid.innerHTML = '';
+
+            favorites.forEach((favorite, index) => {
+                const favoriteItem = document.createElement('a');
+                favoriteItem.href = favorite.url;
+                favoriteItem.className = 'favorite-item';
+                favoriteItem.target = '_blank';
+                
+                // Verifica se tem um ícone customizado
+                const iconSrc = favorite.customIcon || 
+                               `https://www.google.com/s2/favicons?domain=${new URL(favorite.url).hostname}&sz=64`;
+                
+                favoriteItem.innerHTML = `
+                    <img src="${iconSrc}" class="favorite-icon" 
+                         onerror="this.src='https://cdn-icons-png.flaticon.com/512/3767/3767084.png'">
+                    <span class="favorite-name">${favorite.name}</span>
+                    <button class="remove-favorite" data-index="${index}">×</button>
+                    <button class="edit-favorite" data-index="${index}">✎</button>
+                `;
+                favoritesGrid.appendChild(favoriteItem);
+            });
+
+            // Adiciona o botão de adicionar novo favorito
+            const addButton = document.createElement('div');
+            addButton.className = 'add-favorite-btn';
+            addButton.id = 'addFavoriteBtn';
+            addButton.innerHTML = `
+                <img src="imgs/add-image.svg" class="add-icon">
+                <span class="favorite-name">Adicionar</span>
+            `;
+            favoritesGrid.appendChild(addButton);
+
+            // Configura os eventos de remoção
+            document.querySelectorAll('.remove-favorite').forEach(btn => {
+                btn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    const index = parseInt(this.getAttribute('data-index'));
+                    removeFavorite(index);
+                });
+            });
+
+            // Configura os eventos de edição
+            document.querySelectorAll('.edit-favorite').forEach(btn => {
+                btn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    const index = parseInt(this.getAttribute('data-index'));
+                    openEditFavoriteModal(index);
+                });
+            });
+
+            // Configura o botão de adicionar
+            document.getElementById('addFavoriteBtn').addEventListener('click', function(e) {
+                e.preventDefault();
+                openAddFavoriteModal();
+            });
+        }
+
+        function removeFavorite(index) {
+            if (confirm('Tem certeza que deseja remover este favorito?')) {
+                favorites.splice(index, 1);
+                saveFavorites();
+                loadFavorites();
+            }
+        }
+
+        function addFavorite(name, url) {
+            try {
+                // Verifica se a URL é válida
+                new URL(url);
+                
+                // Adiciona https:// se não tiver protocolo
+                if (!url.startsWith('http://') && !url.startsWith('https://')) {
+                    url = 'https://' + url;
+                }
+
+                favorites.push({ name, url });
+                saveFavorites();
+                loadFavorites();
+                return true;
+            } catch (e) {
+                alert('Por favor, insira uma URL válida (ex: youtube.com ou https://youtube.com)');
+                return false;
+            }
+        }
+
+        // Modal para adicionar favoritos
+        const addModal = document.getElementById('addFavoriteModal');
+        const cancelAddBtn = document.getElementById('cancelAddFavorite');
+        const saveAddBtn = document.getElementById('saveFavorite');
+
+        function openAddFavoriteModal() {
+            document.getElementById('favoriteName').value = '';
+            document.getElementById('favoriteUrl').value = '';
+            addModal.style.display = 'flex';
+        }
+
+        function closeAddFavoriteModal() {
+            addModal.style.display = 'none';
+        }
+
+        cancelAddBtn.addEventListener('click', closeAddFavoriteModal);
+
+        saveAddBtn.addEventListener('click', function() {
+            const name = document.getElementById('favoriteName').value.trim();
+            const url = document.getElementById('favoriteUrl').value.trim();
+
+            if (name && url) {
+                if (addFavorite(name, url)) {
+                    closeAddFavoriteModal();
+                }
+            } else {
+                alert('Por favor, preencha todos os campos');
+            }
+        });
+
+        // Modal para editar favoritos
+        const editModal = document.getElementById('editFavoriteModal');
+        let currentlyEditingIndex = null;
+        let newIconFile = null;
+
+        function openEditFavoriteModal(index) {
+            currentlyEditingIndex = index;
+            const favorite = favorites[index];
+            
+            document.getElementById('editFavoriteName').value = favorite.name;
+            document.getElementById('editFavoriteUrl').value = favorite.url;
+            
+            const iconUrl = favorite.customIcon || 
+                           `https://www.google.com/s2/favicons?domain=${new URL(favorite.url).hostname}&sz=64`;
+            
+            document.getElementById('currentFavoriteIcon').src = iconUrl;
+            document.getElementById('iconPreview').style.display = 'none';
+            newIconFile = null;
+            
+            editModal.style.display = 'flex';
+        }
+
+        function closeEditFavoriteModal() {
+            editModal.style.display = 'none';
+        }
+
+        document.getElementById('cancelEditFavorite').addEventListener('click', closeEditFavoriteModal);
+        
+        document.getElementById('uploadIconBtn').addEventListener('click', function() {
+            document.getElementById('iconUploadInput').click();
+        });
+
+        document.getElementById('iconUploadInput').addEventListener('change', function(e) {
+            if (e.target.files && e.target.files[0]) {
+                const reader = new FileReader();
+                
+                reader.onload = function(event) {
+                    document.getElementById('iconPreview').src = event.target.result;
+                    document.getElementById('iconPreview').style.display = 'block';
+                    newIconFile = e.target.files[0];
+                };
+                
+                reader.readAsDataURL(e.target.files[0]);
+            }
+        });
+
+        document.getElementById('saveEditedFavorite').addEventListener('click', function() {
+            const name = document.getElementById('editFavoriteName').value.trim();
+            const url = document.getElementById('editFavoriteUrl').value.trim();
+            
+            if (!name || !url) {
+                alert('Por favor, preencha todos os campos');
+                return;
+            }
+            
+            try {
+                // Valida a URL
+                new URL(url);
+                
+                // Atualiza o favorito
+                const updatedFavorite = {
+                    ...favorites[currentlyEditingIndex],
+                    name,
+                    url
+                };
+                
+                // Se tem um novo ícone, converte para Data URL
+                if (newIconFile) {
+                    const reader = new FileReader();
+                    
+                    reader.onload = function(event) {
+                        updatedFavorite.customIcon = event.target.result;
+                        favorites[currentlyEditingIndex] = updatedFavorite;
+                        saveFavorites();
+                        loadFavorites();
+                        closeEditFavoriteModal();
+                    };
+                    
+                    reader.readAsDataURL(newIconFile);
+                } else {
+                    favorites[currentlyEditingIndex] = updatedFavorite;
+                    saveFavorites();
+                    loadFavorites();
+                    closeEditFavoriteModal();
+                }
+            } catch (e) {
+                alert('Por favor, insira uma URL válida');
+            }
+        });
+
+        // Fecha os modais ao clicar fora
+        window.addEventListener('click', function(e) {
+            if (e.target === addModal) {
+                closeAddFavoriteModal();
+            }
+            if (e.target === editModal) {
+                closeEditFavoriteModal();
+            }
+        });
+    </script>
+</body>
+</html>
