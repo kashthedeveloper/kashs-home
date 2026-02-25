@@ -6,17 +6,17 @@
    id="Capa_1"
    x="0px"
    y="0px"
-   viewBox="0 0 513.749 513.749"
-   style="enable-background:new 0 0 513.749 513.749;"
+   viewBox="0 0 512 512"
+   style="enable-background:new 0 0 512 512;"
    xml:space="preserve"
-   sodipodi:docname="search.svg"
+   sodipodi:docname="menu-burger.svg"
    inkscape:version="1.4.2 (ebf0e940d0, 2025-05-08)"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns="http://www.w3.org/2000/svg"
    xmlns:svg="http://www.w3.org/2000/svg"><defs
-   id="defs1" /><sodipodi:namedview
-   id="namedview1"
+   id="defs3" /><sodipodi:namedview
+   id="namedview3"
    pagecolor="#ffffff"
    bordercolor="#000000"
    borderopacity="1.00"
@@ -24,16 +24,24 @@
    inkscape:pageopacity="0.0"
    inkscape:pagecheckerboard="0"
    inkscape:deskcolor="#505050"
-   inkscape:zoom="1.8515625"
-   inkscape:cx="255.72996"
+   inkscape:zoom="1.7304688"
+   inkscape:cx="256.28894"
    inkscape:cy="256"
    inkscape:current-layer="Capa_1" />
 <g
-   id="g1"
+   id="g3"
    style="fill:#ffffff;fill-opacity:1">
 	<path
-   d="M504.352,459.061l-99.435-99.477c74.402-99.427,54.115-240.344-45.312-314.746S119.261-9.277,44.859,90.15   S-9.256,330.494,90.171,404.896c79.868,59.766,189.565,59.766,269.434,0l99.477,99.477c12.501,12.501,32.769,12.501,45.269,0   c12.501-12.501,12.501-32.769,0-45.269L504.352,459.061z M225.717,385.696c-88.366,0-160-71.634-160-160s71.634-160,160-160   s160,71.634,160,160C385.623,314.022,314.044,385.602,225.717,385.696z"
+   d="M480,224H32c-17.673,0-32,14.327-32,32s14.327,32,32,32h448c17.673,0,32-14.327,32-32S497.673,224,480,224z"
    id="path1"
+   style="fill:#ffffff;fill-opacity:1" />
+	<path
+   d="M32,138.667h448c17.673,0,32-14.327,32-32s-14.327-32-32-32H32c-17.673,0-32,14.327-32,32S14.327,138.667,32,138.667z"
+   id="path2"
+   style="fill:#ffffff;fill-opacity:1" />
+	<path
+   d="M480,373.333H32c-17.673,0-32,14.327-32,32s14.327,32,32,32h448c17.673,0,32-14.327,32-32S497.673,373.333,480,373.333z"
+   id="path3"
    style="fill:#ffffff;fill-opacity:1" />
 </g>
 
