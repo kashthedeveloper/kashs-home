@@ -174,6 +174,14 @@ document.addEventListener('DOMContentLoaded', () => {
     let currentEditIndex = null;
     let uploadedIconBase64 = null;
 
+    function normalizeUrl(url) {
+        url = url.trim();
+        if (!/^https?:\/\//i.test(url)) {
+            url = 'https://' + url;
+        }
+        return url;
+    }
+
     loadFavorites();
 
     function loadFavorites() {
@@ -233,9 +241,11 @@ document.addEventListener('DOMContentLoaded', () => {
     saveFavoriteBtn?.addEventListener('click', () => {
 
         const name = favoriteNameInput.value.trim();
-        const url = favoriteUrlInput.value.trim();
+        let url = favoriteUrlInput.value.trim();
 
         if (!name || !url) return;
+
+        url = normalizeUrl(url);
 
         const icon = `https://www.google.com/s2/favicons?sz=64&domain_url=${url}`;
 
@@ -283,11 +293,13 @@ document.addEventListener('DOMContentLoaded', () => {
         if (currentEditIndex === null) return;
 
         const name = editNameInput.value.trim();
-        const url = editUrlInput.value.trim();
+        let url = editUrlInput.value.trim();
+
         if (!name || !url) return;
 
+        url = normalizeUrl(url);
+
         const icon = uploadedIconBase64 ||
-        favorites[currentEditIndex].icon ||
         `https://www.google.com/s2/favicons?sz=64&domain_url=${url}`;
 
         favorites[currentEditIndex] = { name, url, icon };
