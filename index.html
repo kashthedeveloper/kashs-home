@@ -12,8 +12,11 @@
     <!-- Ícones Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
-    <!-- Seu CSS -->
+    <!-- CSS -->
     <link rel="stylesheet" href="style.css">
+
+    <!-- Script -->
+    <script defer src="script.js"></script>
 
     <title>Home</title>
 </head>
@@ -42,7 +45,9 @@
         </button>
 
         <!-- Menu dropdown de configurações -->
-        <div id="config-menu" class="hidden glass">
+
+        <div id="config-menu" class="hidden">
+            <div id="config-menu-container" class="glass">
 
             <!-- ===== Toggle Favoritos ===== -->
             <div id="fav-switch">
@@ -64,33 +69,36 @@
                     <span>Motor de busca</span>
                 </div>
 
-                <!-- Dropdown com opções -->
-                <div id="engine-dropdown" class="hidden glass">
+            </div>
 
-                    <div class="engine-option" data-engine="duckduckgo">
-                        <img src="imgs/duckduckgo.svg" alt="">
-                        <span>DuckDuckGo</span>
-                    </div>
+            </div>
 
-                    <div class="engine-option" data-engine="google">
-                        <img src="imgs/google.svg" alt="">
-                        <span>Google</span>
-                    </div>
+            <!-- Dropdown com opções -->
+            <div id="engine-dropdown" class="hidden glass">
 
-                    <div class="engine-option" data-engine="bing">
-                        <img src="imgs/bing.svg" alt="">
-                        <span>Bing</span>
-                    </div>
+                <div class="engine-option" data-engine="duckduckgo">
+                    <img src="imgs/duckduckgo.svg" alt="">
+                    <span>DuckDuckGo</span>
+                </div>
 
-                    <div class="engine-option" data-engine="startpage">
-                        <img src="imgs/startpage.svg" alt="">
-                        <span>Startpage</span>
-                    </div>
+                <div class="engine-option" data-engine="google">
+                    <img src="imgs/google.svg" alt="">
+                    <span>Google</span>
+                </div>
 
+                <div class="engine-option" data-engine="bing">
+                    <img src="imgs/bing.svg" alt="">
+                    <span>Bing</span>
+                </div>
+
+                <div class="engine-option" data-engine="startpage">
+                    <img src="imgs/startpage.svg" alt="">
+                    <span>Startpage</span>
                 </div>
             </div>
 
         </div>
+
     </div>
 
 
@@ -105,22 +113,21 @@
 
         <!-- ===== Barra de Busca ===== -->
         <div class="search-box glass">
+            <form action="https://duckduckgo.com/" method="GET" class="search-form">
 
-            <!-- Formulário -->
-            <form action="https://duckduckgo.com/" method="GET">
-                <input 
-                    type="text" 
-                    name="q" 
-                    class="input-box" 
-                    placeholder="Pesquise..." 
+                <input
+                    type="text"
+                    name="q"
+                    class="input-box"
+                    placeholder="Pesquise..."
                     autofocus
                 >
-            </form>
 
-            <!-- Botão de busca -->
-            <button type="submit" class="search-btn">
-                <img src="imgs/search.svg" class="search-icon" alt="Buscar">
-            </button>
+                <button type="submit" class="search-btn">
+                    <img src="imgs/search.svg" class="search-icon" alt="Buscar">
+                </button>
+
+            </form>
         </div>
 
 
@@ -140,8 +147,8 @@
         <!-- ============================= -->
         <!-- MODAL DE FAVORITOS -->
         <!-- ============================= -->
-        <div id="favorite-modal" class="modal glass">
-            <div class="modal-content">
+        <div id="favorite-modal" class="modal">
+            <div class="modal-content glass">
 
                 <!-- Botão fechar -->
                 <span class="close-modal">&times;</span>
@@ -149,7 +156,7 @@
                 <h3 id="modal-title">Adicionar Favorito</h3>
 
                 <!-- Inputs -->
-                <input 
+                <input
                     type="text" 
                     id="favorite-name" 
                     placeholder="Nome do Site"
@@ -164,19 +171,31 @@
                 <!-- Botões -->
                 <div class="modal-buttons">
                     <button id="save-favorite">Salvar</button>
-                    <button id="delete-favorite" class="hidden">Excluir</button>
                 </div>
 
             </div>
         </div>
 
+        <div id="edit-favorite-modal" class="modal">
+            <div class="modal-content glass">
+                <span class="close-modal" id="close-edit-modal">&times;</span>
+
+                <h3>Editar Favorito</h3>
+
+                <input type="text" id="edit-favorite-name" placeholder="Nome do site">
+                <input type="url" id="edit-favorite-url" placeholder="https://exemplo.com">
+            <input type="file" id="edit-favorite-icon-file" accept="image/*">
+
+            <img id="edit-icon-preview" style="width:48px;height:48px;margin-top:10px;object-fit:contain;display:none;">
+
+                <div class="modal-buttons">
+                <button id="delete-favorite">Excluir</button>
+                <button id="save-edit-favorite">Salvar</button>
+                </div>
+            </div>
+        </div>
+
     </div>
-
-
-    <!-- ============================= -->
-    <!-- SCRIPT -->
-    <!-- ============================= -->
-    <script src="script.js"></script>
 
 </body>
 </html>
