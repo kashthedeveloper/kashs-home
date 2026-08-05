@@ -36,9 +36,39 @@ button {
  = *======================================================== */
 
 .glass {
-    background-color: rgba(255, 255, 255, 0.2);
+    background-color: rgba(0, 0, 0, 0.1);
     backdrop-filter: blur(8px);
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+    border-style: solid;
+    border-width: 0px;
+    border-color: transparent;
+    z-index: 0;
+}
+
+.glass::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  padding: 2px; /* espessura da borda */
+  border-radius: inherit;
+
+  /* gradiente simulando luz */
+  background: linear-gradient(
+    135deg,
+    rgba(255,255,255,0.6) 0%,
+    rgba(255,255,255,0.15) 30%,
+    rgba(255,255,255,0.05) 60%,
+    rgba(255,255,255,0.2) 100%
+  );
+
+  /* recorta só a borda */
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+          mask-composite: exclude;
+
+  pointer-events: none;
 }
 
 .icon {
@@ -159,6 +189,7 @@ gap: 10px;
 }
 
 .switch {
+    border-radius: 50px;
     position: relative;
     width: 50px;
     height: 26px;
@@ -263,6 +294,7 @@ display: flex;
 }
 
 
+
 /* =========================================================
  *  FAVORITOS
  = *======================================================== */
@@ -302,7 +334,7 @@ gap: 15px;
 /* Garante que o botão config fique posicionado corretamente */
 .favorite-item {
     position: relative;
-    background-color: rgba(255, 255, 255, 0.1);
+    background-color: rgba(0, 0, 0, 0.1);
     cursor: pointer;
 }
 
@@ -311,7 +343,7 @@ gap: 15px;
 }
 
 .add-favorite-item {
-    background-color: rgba(255, 255, 255, 0.1);
+    background-color: rgba(0, 0, 0, 0.1);
     cursor: pointer;
 }
 
@@ -483,3 +515,4 @@ right: 20px;
     position: absolute;
     top: 90%;
 }
+
