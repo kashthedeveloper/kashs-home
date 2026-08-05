@@ -87,6 +87,37 @@ document.addEventListener('DOMContentLoaded', () => {
     const savedEngine = localStorage.getItem('searchEngine') || 'duckduckgo';
     applyEngine(savedEngine);
 
+    /* =====================================================
+ * SEARCH: DETECTAR URL
+ * ===================================================== */
+
+const searchInput = searchForm.querySelector('input');
+
+searchForm.addEventListener('submit', (e) => {
+    e.preventDefault(); // 🔴 impede o redirect automático
+
+    const value = searchInput.value.trim();
+
+    if (isURL(value)) {
+        const url = value.startsWith('http')
+            ? value
+            : 'https://' + value;
+
+        window.location.href = url;
+    } else {
+        searchForm.submit(); // continua busca normal
+    }
+});
+
+function isURL(str) {
+    try {
+        new URL(str.startsWith('http') ? str : 'https://' + str);
+        return true;
+    } catch {
+        return false;
+    }
+}
+
     if (engineButton && engineDropdown) {
 
         engineButton.addEventListener('click', (e) => {
