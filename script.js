@@ -1,5 +1,3 @@
-document.addEventListener('DOMContentLoaded', () => {
-
     /* =====================================================
      * MENU BURGER
      * ===================================================== */
@@ -112,7 +110,7 @@ searchForm.addEventListener('submit', (e) => {
 function isURL(str) {
     try {
         new URL(str.startsWith('http') ? str : 'https://' + str);
-        return url.hostname.includes('.');
+        return true;
     } catch {
         return false;
     }
@@ -364,7 +362,3 @@ function isURL(str) {
     });
 
 });
-document.addEventListener('DOMContentLoaded', () => {
-
-
-                          
